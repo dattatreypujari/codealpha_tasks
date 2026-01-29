@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome Icons CDN for UI controls -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Main Music Player Container -->
+    <div class="music-player">
+        <!-- Album Art Display -->
+        <!-- Shows cover image of currently playing song with animation effects -->
+        <div class="album-art">
+            <img id="albumArt" src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&h=300&fit=crop" alt="Album Art">
+        </div>
+
+        <!-- Song Information Section -->
+        <!-- Displays title and artist of currently loaded song -->
+        <div class="song-info">
+            <h2 id="songTitle">No Song Playing</h2>
+            <p id="artistName">Artist</p>
+        </div>
+
+        <!-- Progress Bar and Time Display -->
+        <!-- Shows current playback position and allows seeking to specific time -->
+        <div class="progress-container">
+            <span id="currentTime" class="time">0:00</span>
+            <!-- Custom progress bar styling with hidden range input -->
+            <div class="progress-bar">
+                <input type="range" id="progressBar" class="progress" min="0" max="100" value="0">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+            <span id="duration" class="time">0:00</span>
+        </div>
+
+        <!-- Playback Control Buttons -->
+        <!-- Previous, Play/Pause, Next, and Repeat buttons for song navigation -->
+        <div class="controls">
+            <button id="prevBtn" class="control-btn" title="Previous">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            <button id="playPauseBtn" class="control-btn play-pause" title="Play">
+                <i class="fas fa-play"></i>
+            </button>
+            <button id="nextBtn" class="control-btn" title="Next">
+                <i class="fas fa-step-forward"></i>
+        <!-- Volume Control Section -->
+        <!-- Slider for volume adjustment (0-100%) with dynamic icon display -->
+        <div class="volume-container">
+            <i class="fas fa-volume-mute"></i>
+            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="70">
+            <span id="volumeValue">70%</span>
+        </div>
+
+        <!-- Autoplay Toggle Switch -->
+        <!-- When enabled, automatically plays next song when current song ends -->
+        <div class="autoplay-container">
+            <label for="autoplayToggle" class="autoplay-label">
+                <input type="checkbox" id="autoplayToggle" checked>
+                <span>Autoplay</span>
+            </label>
+        </div>
+
+        <!-- Playlist Container -->
+        <!-- Contains all songs with search functionality and add/edit/delete options -->
+        <div class="playlist-container">
+            <!-- Playlist Header with Title and Add Button -->
+            <div class="playlist-header">
+                <h3>Playlist <span id="playlistToggleBtn" class="toggle-btn"><i class="fas fa-chevron-down"></i></span></h3>
+                <button id="addSongBtn" class="add-song-btn" title="Add Song">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            
+            <!-- Search Bar for Filtering Songs -->
+            <!-- Searches by title and artist name in real-time -->
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search songs or artists...">
+                <button id="clearSearchBtn" class="clear-search-btn" title="Clear">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Playlist Items Container -->
+            <!-- Dynamically populated with song entries via JavaScript -->
+            <div id="playlistItems" class="playlist-items">
+                <!-- Playlist items will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Song Modal Dialog -->
+    <!-- Appears when user clicks add button or edit button on a song -->
+    <div id="songModal" class="modal">
+        <div class="modal-content">
+            <!-- Modal Header with Title and Close Button -->
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Song</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <!-- Form for Song Data Input -->
+            <form id="songForm">
+                <!-- Song Title Input -->
+                <div class="form-group">
+                    <label for="songTitle">Song Title:</label>
+                    <input type="text" id="songTitle" required placeholder="Enter song title">
+                </div>
+                <!-- Artist Name Input -->
+                <div class="form-group">
+                    <label for="songArtist">Artist Name:</label>
+                    <input type="text" id="songArtist" required placeholder="Enter artist name">
+                </div>
+                <!-- Song Duration Input (in seconds) -->
+                <div class="form-group">
+                    <label for="songDuration">Duration (seconds):</label>
+                    <input type="number" id="songDuration" required placeholder="Enter duration in seconds" min="1">
+                </div>
+                <!-- Audio File URL Input -->
+                <div class="form-group">
+                    <label for="songUrl">Audio URL:</label>
+                    <input type="url" id="songUrl" required placeholder="Enter audio file URL">
+                </div>
+                <!-- Cover Image URL Input -->
+                <div class="form-group">
+                    <label for="songCover">Cover Image URL:</label>
+                    <input type="url" id="songCover" required placeholder="Enter cover image URL">
+                </div>
+                <!-- Form Action Buttons -->
+                <div class="modal-buttons">
+                    <button type="submit" class="btn-save">Save Song</button>
+                    <button type="button" class="btn-cancel" id="cancelBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hidden Audio Element -->
+    <!-- Used by JavaScript to handle actual audio playback -->
+    <audio id="audioPlayer"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
